@@ -1,5 +1,7 @@
 package com.lastminute.saletaxes.model;
 
+import java.math.BigDecimal;
+
 /**
  * Created by massimo on 18/05/16.
  */
@@ -22,7 +24,7 @@ public abstract class Item {
         this.imported = imported;
     }
 
-    public abstract double getTax();
+    public abstract BigDecimal getTax();
 
     public String getName() {
         return name;

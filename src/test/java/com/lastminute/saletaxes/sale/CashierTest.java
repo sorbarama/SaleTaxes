@@ -38,7 +38,7 @@ public class CashierTest extends AbstractTest {
         Assert.assertEquals(20.89, this.generic.getTotalCost(), DELTA);
         Assert.assertEquals(32.19, this.genericImported.getTotalCost(), DELTA);
         Assert.assertEquals(9.75, this.medical.getTotalCost(), DELTA);
-        Assert.assertEquals(11.81, this.food.getTotalCost(), DELTA);
+        Assert.assertEquals(11.85, this.food.getTotalCost(), DELTA);
     }
 
     @Test

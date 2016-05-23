@@ -1,29 +1,50 @@
 package com.lastminute.saletaxes.tax;
 
+import java.math.BigDecimal;
+import java.text.*;
 import java.util.Locale;
 
 public class Calculator {
-
-    public static final double DOUBLE_100 = 100.0;
 
     public static double truncate(double value) {
         String result = String.format(Locale.ENGLISH, "%.2f", value);
         return Double.parseDouble(result);
     }
 
-    public static double roundoff(double value) {
-        return Math.round(value * DOUBLE_100) / DOUBLE_100;
-    }
+    double roundTo2Decimals(BigDecimal value) {
+        value = value.setScale(2, BigDecimal.ROUND_HALF_UP);
 
-    public double calculateTax(double price, double tax, Boolean imported) {
+        BigDecimal d1 = value.setScale(1, BigDecimal.ROUND_DOWN);
 
-        double toReturn = price * tax;
+        //extract the second digit
+        int d1_d = (d1.subtract(value).multiply(BigDecimal.valueOf(100)).abs().toBigInteger()).intValue();
 
-        if (imported) {
-            toReturn += (price * TaxEnum.TAX_IMPORT.getTax());
+        //rounded up to the nearest 0.05
+        switch (d1_d){
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+                return value.setScale(1, BigDecimal.ROUND_DOWN).add(BigDecimal.valueOf(0.05)).doubleValue();
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+                return value.setScale(1, BigDecimal.ROUND_UP).doubleValue();
+            default:
+                return value.doubleValue();
         }
 
-        toReturn = roundoff(toReturn);
+    }
+
+    public double calculateTax(double price, BigDecimal tax, Boolean imported) {
+
+        BigDecimal bigDecimalPrice = BigDecimal.valueOf(price);
+        double toReturn = roundTo2Decimals(bigDecimalPrice.multiply(tax));
+
+        if (imported) {
+            toReturn += roundTo2Decimals(bigDecimalPrice.multiply(TaxEnum.TAX_IMPORT.getTax()));
+        }
 
         return toReturn;
     }

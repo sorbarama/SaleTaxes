@@ -2,6 +2,8 @@ package com.lastminute.saletaxes.model;
 
 import com.lastminute.saletaxes.tax.TaxEnum;
 
+import java.math.BigDecimal;
+
 /**
  * Created by massimo on 18/05/16.
  */
@@ -11,7 +13,7 @@ public class GenericItem extends Item {
     }
 
     @Override
-    public double getTax() {
+    public BigDecimal getTax() {
         return TaxEnum.TAX_GENERIC.getTax();
     }
 

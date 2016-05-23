@@ -3,6 +3,7 @@ package com.lastminute.saletaxes.sale;
 import com.lastminute.saletaxes.model.*;
 import com.lastminute.saletaxes.tax.Calculator;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 public class Cashier {
@@ -13,7 +14,7 @@ public class Cashier {
         this.calculator = new Calculator();
     }
 
-    public double calculateTax(double price, double tax, boolean imported) {
+    public double calculateTax(double price, BigDecimal tax, boolean imported) {
 
         double totalItemTax = this.calculator.calculateTax(price, tax, imported);
         return totalItemTax;
